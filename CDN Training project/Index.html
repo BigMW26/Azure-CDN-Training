@@ -18,6 +18,7 @@
 			<div style="float: left">
 				<h1>CDN TRAINING WORKING PATH</h1>
 				<h2>CDN overview</h2>
+				<p>View the <a href="https://microsoft-my.sharepoint.com/:p:/p/wyattm/ETVyrYAF4TdNqHIti6CYTVkBeedYcKKagqBv50-vzIMy-g?e=UodM4r">CDN overview presentation</a></p>
 				<p>Who knew what CDN was before it was brought to our team?</p>
 				<p>What did you get out of the introcutory PowerPoint presentation?</p>
 			</div>
@@ -89,7 +90,62 @@
 
 		<p>Sample cmd: wget -S -O NUL --header="Host:&lt;alias&gt;cdn.azureedge.net"
 			http://&lt;ipaddress&gt;/images/cdn_logo.png.png</p>
+		<h2>Using cURL</h2>
+		<p><bold>cURL is a command run in Bash that allows you to see a specific URL’s response header and HTTP status. It can be helpful in troubleshooting caching issues and 4xx/5xx errors. It’s also a dope way to get massive arm circumference.</bold></p>
+		<p>Using cURL in troubleshooting is as simple as the following command: </p>
+		<ul>
+			<li>$ curl -I <url> </li>
+		</ul>
+		<p>Which will result in an output similar to (relevant information highlighted):</p>
+		<ul>
+			<li>$ curl -I "https://pbs.twimg.com/media/EC_ROiQXsAAzkxi?format=jpg&name=4096x4096" <br>
 
+				HTTP/1.1 200 OK <br>
+				
+				Accept-Ranges: bytes <br>
+				
+				access-control-allow-origin: * <br>
+				
+				access-control-expose-headers: Content-Length <br>
+				
+				cache-control: max-age=604800, must-revalidate <br>
+				
+				Content-Type: image/jpeg <br>
+				
+				Date: Tue, 27 Aug 2019 19:34:32 GMT <br>
+				
+				Last-Modified: Tue, 27 Aug 2019 16:02:05 GMT <br>
+				
+				Server: ECS (sjc/4E32) <br>
+				
+				strict-transport-security: max-age=631138519 <br>
+				
+				surrogate-key: media media/bucket/1 media/1166380876156088320 <br>
+				
+				X-Cache: HIT <br>
+				
+				x-connection-hash: bb4be70a053d9f034ef2cfe16199e3d0 <br>
+				
+				x-content-type-options: nosniff <br>
+				
+				x-response-time: 200 <br>
+				
+				Content-Length: 427398 </li>
+		</ul>
+		<p>4xx/5xx errors:</p>
+		<ul>
+			<li>Run curl against both the endpoint and the origin, if the error response matches at each URL, you can rule out the CDN endpoint as an issue </li>
+		</ul>
+		<p>Cache control Headers: </p>
+		<ul>
+			<li>If max-age here is set to 0, the CDN endpoint will not cache content. The CDN can be set to override origin caching settings </li>
+		</ul>
+		<p>CDN cache function: </p>
+		<ul>
+			<li>Run curl with the file URL itself. If the response here shows/includes “HIT,” the content is being served from the CDN’s cache; a response of MISS would mean content is being served by the origin and caching behavior is not taking place. </li>
+		</ul>
+		<p>*responses for all curl commands may vary slightly depending on provider; always check  <a href="https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki?pagePath=%2FAzure%20CDN%2FCommon%2FHow%20To%2FTSG%20%252D%20Caching%20Issues&pageId=210780&wikiVersion=GBmaster">https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki?pagePath=%2FAzure%20CDN%2FCommon%2FHow%20To%2FTSG%20%252D%20Caching%20Issues&pageId=210780&wikiVersion=GBmaster</a> for provider-specific guides. </p>
+		<h2>Use Dig DNS</h2>
 		<p>Use Dig to get additional data like CNAME and other DNS records associated with the
 			CDN URL. Helpful in cases with custom DNS configured
 			<a href="http://digdns.com">http://digdns.com</a></p>
@@ -222,7 +278,7 @@
 					<p>Wiki coming soon in the DevOps portal but the current CSS Wiki does have some of the process to
 						follow. OneNote is best for now.</p>
 					<p><a
-							href="https://www.csssupportwiki.com/index.php/curated:Azure_Networking_-_Azure_CDN">https://www.csssupportwiki.com/index.php/Azure_Networking_-_Azure_CDN</a>
+							href="https://supportability.visualstudio.com/AzureNetworking/_wiki/wikis/Wiki?pagePath=%2FAzure%20CDN&pageId=24301&wikiVersion=GBmaster">Azure CDN WiKi</a>
 					</p>
 				</li>
 			</ul>
